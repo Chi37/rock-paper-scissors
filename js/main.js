@@ -93,10 +93,13 @@ function playRound() {
     //Determine Winner
     if (results.p === results.c){
         winner = 't';
+        scores[winner] += 1;
     } else if (results.c === rpsLookup[results.p].beats){
         winner = 'p';
+        scores[winner] += 1;
     } else {
         winner ='c';
+        scores[winner] += 1;
     }
     
 
