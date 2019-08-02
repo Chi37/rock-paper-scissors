@@ -10,3 +10,31 @@ body {
   justify-content: center;
   align-items: center;
 }
+/* grid-col we specify size */
+main {
+  display: grid;
+  grid-template-columns: 30vmin 15vmin 30vmin;
+  /* you don't specify rows (auto) if your data updates */
+  /* 3rd row vmin has to match columns to make fit sq img */
+  grid-template-rows: 10vmin 10vmin 30vmin 10vmin;
+}
+
+
+/* center everything use *. justify-center horizaontal and align-items vertical */
+main * {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+/* expand button to all four cols (stretch button out to width of grid container */
+main button {
+  grid-column: span 3;
+}
+
+
+button {
+  margin: 2vmin;
+  
+}
+
