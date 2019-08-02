@@ -1,6 +1,20 @@
 /*----- constants -----*/
 const beepAudio = new Audio('http://soundbible.com/mp3/Robot_blip-Marianne_Gagnon-120342607.mp3');
 const shootAudio = new Audio('http://soundbible.com/mp3/shooting_star-Mike_Koenig-1132888100.mp3');
+const rpsLookup = {
+    r: {
+        imgUrl: 'imgs/rock.png',
+        beats: 's'
+    },
+    p: {
+        imgUrl: 'imgs/paper.png',
+        beats: 'r'
+    },
+    s: {
+        imgUrl: 'imgs/scissors.png',
+        beats: 'p'
+    }
+}
 
 /*----- app's state (variables) -----*/
 let scores, results, winner;
@@ -13,7 +27,17 @@ const scoresEl = {
     t: document.getElementById('t-score'),
     c: document.getElementById('c-score'),
 }
-
+//rock paper or scissors imgs. BorderEl to say who is the winner for that round that is why we made an obj of objs
+const resultsEl = {
+    p: {
+        borderEl: document.getElementById('p-result'),
+        imgEl: document.querySelector('#p-result img')
+    },
+    c: {
+        borderEl: document.getElementById('c-result'),
+        imgEl: document.querySelector('#c-result img')
+    }
+}
 /*----- event listeners -----*/
 document.querySelector('main button')
 .addEventListener('click', playRound);
@@ -42,14 +66,45 @@ function init() {
 
 function render() {
  //render scores
+ //go through the scoresEl in cache to grab html ids for scores and update the score!
  for (let score in scores){
-     console.log(score)
      scoresEl[score].textContent = scores[score];
+ }
+
+ //how we will render the board, if winner is c,p then we want grey. Ternary
+ 
+ for (let result in results){
+     
+     resultsEl[result].borderEl.style.borderColor = 
+        winner === result ? 'grey' : 'white';
+    //lookup rpsLookup p or c and from that grab img
+     resultsEl[result].imgEl.src = 
+        rpsLookup[results[result]].imgUrl;
  }
 
 }
 
 function playRound() {
+    //Determine results
+    results.p = getRandomRPS();
+    results.c = getRandomRPS();
 
+
+    //Determine Winner
+    if (results.p === results.c){
+        winner = 't';
+    } else if (results.c === rpsLookup[results.p].beats){
+        winner = 'p';
+    } else {
+        winner ='c';
+    }
+    
+
+    render();
 }
-// alert('ready!')
+
+function getRandomRPS() {
+    let rps = Object.keys(rpsLookup); // [r,p,s]
+    let rndIdx = Math.floor(Math.random() * rps.length );
+    return rps[rndIdx] //return r p s KEY to PLAYROUNBD FUnction where results obj is equal to rps
+}

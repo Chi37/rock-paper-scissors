@@ -30,11 +30,15 @@ main * {
 /* expand button to all four cols (stretch button out to width of grid container */
 main button {
   grid-column: span 3;
+  margin: 2vmin;
 }
 
-
-button {
-  margin: 2vmin;
+#p-result, #c-result {
+  border: 2vmin solid white;
+  border-radius: 5vmin;
   
 }
-
+#p-result img, #c-result img {
+  width: 100%;
+  
+}
